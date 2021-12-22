@@ -9,9 +9,7 @@ using WebApi.Errors;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductoController : ControllerBase
+    public class ProductoController : BaseApiController
     {
         private readonly IGenericRepository<ProductoEntity> _producto;
         private readonly IMapper _mapper;

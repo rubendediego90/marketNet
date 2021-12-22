@@ -33,9 +33,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+   app.UseSwagger();
+   app.UseSwaggerUI();
 }
+
+//Ejecuta el controlador error. 
+app.UseStatusCodePagesWithReExecute("/error");
+//app.UseStatusCodePagesWithReExecute("/error", "?code{0}"); 
 
 app.UseHttpsRedirection();
 
