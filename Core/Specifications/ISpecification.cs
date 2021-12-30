@@ -14,5 +14,13 @@ namespace Core.Specifications
 
         //includes, relaciones entre entidades
         List<Expression<Func<T,object>>> Includes { get;}
+
+        Expression<Func<T, object>> OrderBy { get; }
+
+        Expression<Func<T, object>> OrderByDesc { get; }
+
+
+
+
     }
 }

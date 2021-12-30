@@ -18,6 +18,17 @@ namespace Negocio.Data
                 inputQuery = inputQuery.Where(spec.Criteria);
             }
 
+            if(spec.OrderBy != null)
+            {
+                inputQuery = inputQuery.OrderBy(spec.OrderBy);
+            }
+
+            if (spec.OrderByDesc != null)
+            {
+                inputQuery = inputQuery.OrderByDescending(spec.OrderByDesc);
+            }
+
+
             inputQuery = spec.Includes.Aggregate(inputQuery, (current, include) => current.Include(include));
             return inputQuery;
         }

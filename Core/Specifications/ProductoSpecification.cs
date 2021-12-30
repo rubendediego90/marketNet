@@ -9,10 +9,35 @@ namespace Core.Specifications
 {
     public class ProductoSpecification : BaseSpecification<ProductoEntity>
     {
-        public ProductoSpecification()
+        public ProductoSpecification(string? sort)
         {
             AddInclude(p =>p.Categoria);
             AddInclude(p =>p.Marca);
+
+            switch (sort)
+            {
+                case "precioAsc":
+                    AddOrderBy(p => p.Precio);
+                    break;
+                case "precioDesc":
+                    AddOrderByDesc(p => p.Precio);
+                    break;
+                case "descripcionAsc":
+                    AddOrderBy(p => p.Descripcion);
+                    break;
+                case "descripcionDesc":
+                    AddOrderByDesc(p => p.Descripcion);
+                    break;
+                case "nombreAsc":
+                    AddOrderBy(p => p.Nombre);
+                    break;
+                case "nombreDesc":
+                    AddOrderByDesc(p => p.Nombre);
+                    break;
+                default:
+                    AddOrderBy(p => p.Nombre);
+                    break;
+            }
 
         }
 
