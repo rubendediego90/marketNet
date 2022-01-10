@@ -19,12 +19,27 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        public async Task<ActionResult<List<ProductoEntity>>> GetProductos([FromQuery]ProductoSpecificationParams productoParams)
+        public async Task<ActionResult<PaginationResponse<ProductoDto>>> GetProductos([FromQuery]ProductoSpecificationParams productoParams)
         {
 
             var spec = new ProductoSpecification(productoParams);
             var productos = await _producto.GetAllSpec(spec);
-            return Ok(_mapper.Map<IReadOnlyList<ProductoEntity>, IReadOnlyList<ProductoDto>>(productos));   
+            var spectCount = new ProductoForCountingSpecification(productoParams);
+            var totalProductos = await _producto.CountAync(spectCount);//total de productos
+            var rounded = Math.Ceiling(Convert.ToDecimal(totalProductos / productoParams.PageSize));//cantidad de paginas
+            var totalPages = Convert.ToInt32(rounded);
+            var data = _mapper.Map<IReadOnlyList<ProductoEntity>, IReadOnlyList<ProductoDto>>(productos);
+
+            return Ok(
+                new PaginationResponse<ProductoDto>
+                {
+                    Count = totalProductos,
+                    Data = data,
+                    PageCount = totalPages,
+                    PageIndex = productoParams.PageIndex,
+                    PaseSize = productoParams.PageSize
+                }
+                );
         }
 
         [HttpGet("{id}")]
