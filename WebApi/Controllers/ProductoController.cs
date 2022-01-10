@@ -19,10 +19,10 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        public async Task<ActionResult<List<ProductoEntity>>> GetProductos(string? sort)
+        public async Task<ActionResult<List<ProductoEntity>>> GetProductos([FromQuery]ProductoSpecificationParams productoParams)
         {
 
-            var spec = new ProductoSpecification(sort);
+            var spec = new ProductoSpecification(productoParams);
             var productos = await _producto.GetAllSpec(spec);
             return Ok(_mapper.Map<IReadOnlyList<ProductoEntity>, IReadOnlyList<ProductoDto>>(productos));   
         }

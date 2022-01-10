@@ -11,8 +11,8 @@ using Negocio.Data;
 namespace Negocio.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211215082547_inicial2")]
-    partial class inicial2
+    [Migration("20220105105747_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

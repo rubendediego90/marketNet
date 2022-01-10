@@ -19,7 +19,11 @@ namespace Core.Specifications
 
         Expression<Func<T, object>> OrderByDesc { get; }
 
+        int Take { get; } //cantidad de elemento de la consulta
 
+        int Skip { get; } //posicion de la página
+
+        bool IsPagingEnabled { get; } //para activar la paginación
 
 
     }

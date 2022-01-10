@@ -9,12 +9,17 @@ namespace Core.Specifications
 {
     public class ProductoSpecification : BaseSpecification<ProductoEntity>
     {
-        public ProductoSpecification(string? sort)
+        public ProductoSpecification(ProductoSpecificationParams productoParams) 
+            : base(x=>(!productoParams.Marca.HasValue || x.MarcaId== productoParams.Marca) &&
+                       (!productoParams.Categoria.HasValue || x.CategoriaId== productoParams.Categoria)            
+            )
         {
             AddInclude(p =>p.Categoria);
             AddInclude(p =>p.Marca);
 
-            switch (sort)
+            ApplyPaging(productoParams.PageSize*(productoParams.PageIndex-1),productoParams.PageSize);
+
+            switch (productoParams.Sort)
             {
                 case "precioAsc":
                     AddOrderBy(p => p.Precio);
@@ -47,6 +52,5 @@ namespace Core.Specifications
             AddInclude(p => p.Marca);
 
         }
-
     }
 }
